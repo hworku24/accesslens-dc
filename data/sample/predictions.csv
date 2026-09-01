@@ -1,0 +1,7 @@
+prediction_id,latitude,longitude,ramp_present,confidence,condition,image_id,model_name
+pred-001,38.904925,-77.034085,1,0.96,good,img-001,demo_detector
+pred-002,38.905415,-77.033505,1,0.62,fair,img-002,demo_detector
+pred-003,38.906015,-77.032975,1,0.88,fair,img-003,demo_detector
+pred-004,38.906645,-77.032405,1,0.91,good,img-004,demo_detector
+pred-005,38.907185,-77.031815,0,0.74,missing,img-005,demo_detector
+pred-007,38.910000,-77.029000,1,0.83,good,img-007,demo_detector

@@ -1,0 +1,7 @@
+record_id,latitude,longitude,ramp_present,condition,source
+dc-001,38.904920,-77.034090,1,good,synthetic_inventory
+dc-002,38.905410,-77.033510,1,poor,synthetic_inventory
+dc-003,38.906010,-77.032980,0,missing,synthetic_inventory
+dc-004,38.906640,-77.032410,1,good,synthetic_inventory
+dc-005,38.907180,-77.031820,1,fair,synthetic_inventory
+dc-006,38.907760,-77.031240,0,missing,synthetic_inventory

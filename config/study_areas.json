@@ -1,0 +1,15 @@
+{
+  "navy_yard_capitol_riverfront": {
+    "description": "Mixed-use blocks around Navy Yard and the Capitol Riverfront",
+    "bbox_wgs84": [-77.015, 38.865, -76.985, 38.895]
+  },
+  "anacostia_fairlawn": {
+    "description": "Residential and commercial streets east of the Anacostia River",
+    "bbox_wgs84": [-76.995, 38.845, -76.955, 38.88]
+  },
+  "columbia_heights_petworth": {
+    "description": "Residential study area with a dense curb-ramp inventory",
+    "bbox_wgs84": [-77.04, 38.92, -77.015, 38.96]
+  }
+}
+

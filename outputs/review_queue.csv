@@ -1,0 +1,6 @@
+condition,distance_meters,latitude,longitude,pred_condition,pred_confidence,pred_image_id,pred_latitude,pred_longitude,pred_model_name,pred_prediction_id,pred_ramp_present,ramp_present,record_id,review_reasons,source
+missing,0.704,38.90601,-77.03298,fair,0.88,img-003,38.906015,-77.032975,demo_detector,pred-003,1,0,dc-003,inventory_model_disagreement|condition_disagreement,synthetic_inventory
+fair,0.704,38.90718,-77.03182,missing,0.74,img-005,38.907185,-77.031815,demo_detector,pred-005,0,1,dc-005,inventory_model_disagreement|condition_disagreement,synthetic_inventory
+poor,0.704,38.90541,-77.03351,fair,0.62,img-002,38.905415,-77.033505,demo_detector,pred-002,1,1,dc-002,low_confidence|condition_disagreement,synthetic_inventory
+,,,,good,0.83,img-007,38.91,-77.029,demo_detector,pred-007,1,,,unmatched_prediction,
+missing,,38.90776,-77.03124,,,,,,,,,0,dc-006,unmatched_inventory_record,synthetic_inventory
