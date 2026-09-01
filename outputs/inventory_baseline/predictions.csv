@@ -1,0 +1,13 @@
+confidence,image_ids,latency_ms,model_name,predicted_label,quality_gate_pass,record_id
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_18645
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_11753
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_absent,,ADA_CurbRampPt_31142
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_6680
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_3245
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_28492
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_absent,,ADA_CurbRampPt_2568
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_23006
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_27682
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_20386
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_absent,,ADA_CurbRampPt_19095
+1.0,,0.0,ddot_2016_inventory_baseline,ramp_present,,ADA_CurbRampPt_22233

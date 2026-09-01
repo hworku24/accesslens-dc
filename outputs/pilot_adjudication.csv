@@ -1,0 +1,13 @@
+adjudicated_truth_label,image_quality,inventory_agreement,inventory_condition,inventory_prediction,label_adjudication,label_adjudication_reason,model_agreement,model_confidence,model_prediction,primary_review_code,raw_truth_label,record_id,review_qualification,study_area
+ramp_absent,usable,false,Fair,ramp_present,retained,,abstain,0.0,abstain,possible_world_change,ramp_absent,ADA_CurbRampPt_18645,Requires independent evidence before asserting inventory error or world change.,anacostia_fairlawn
+ramp_present,good,true,Good,ramp_present,retained,,abstain,0.620605,abstain,ambiguous_geometry,ramp_present,ADA_CurbRampPt_11753,,anacostia_fairlawn
+ramp_absent,good,true,Missing,ramp_absent,retained,,true,0.989726,ramp_absent,no_disagreement,ramp_absent,ADA_CurbRampPt_31142,,anacostia_fairlawn
+ramp_present,good,true,Non-Compliant,ramp_present,retained,,abstain,0.669162,abstain,ambiguous_geometry,ramp_present,ADA_CurbRampPt_6680,,anacostia_fairlawn
+ramp_absent,good,false,Fair,ramp_present,retained,,abstain,0.0,abstain,possible_world_change,ramp_absent,ADA_CurbRampPt_3245,Requires independent evidence before asserting inventory error or world change.,columbia_heights_petworth
+cannot_determine,unusable,not_scorable,Good,ramp_present,changed_to_cannot_determine,unusable_images_cannot_support_presence_or_absence,not_scorable,0.0,abstain,imagery_insufficient,ramp_absent,ADA_CurbRampPt_28492,,columbia_heights_petworth
+ramp_absent,usable,true,Missing,ramp_absent,retained,,abstain,0.0,abstain,ambiguous_geometry,ramp_absent,ADA_CurbRampPt_2568,,columbia_heights_petworth
+ramp_absent,good,false,Non-Compliant,ramp_present,retained,,abstain,0.6086119999999999,abstain,possible_world_change,ramp_absent,ADA_CurbRampPt_23006,Requires independent evidence before asserting inventory error or world change.,columbia_heights_petworth
+cannot_determine,unusable,not_scorable,Fair,ramp_present,retained,,not_scorable,0.0,abstain,imagery_insufficient,cannot_determine,ADA_CurbRampPt_27682,,navy_yard_capitol_riverfront
+ramp_present,usable,true,Good,ramp_present,retained,,abstain,0.0,abstain,ambiguous_geometry,ramp_present,ADA_CurbRampPt_20386,,navy_yard_capitol_riverfront
+cannot_determine,,not_scorable,Missing,ramp_absent,retained,,not_scorable,0.0,abstain,imagery_insufficient,cannot_determine,ADA_CurbRampPt_19095,,navy_yard_capitol_riverfront
+cannot_determine,poor,not_scorable,Non-Compliant,ramp_present,retained,,not_scorable,0.996258,ramp_present,imagery_insufficient,cannot_determine,ADA_CurbRampPt_22233,,navy_yard_capitol_riverfront
