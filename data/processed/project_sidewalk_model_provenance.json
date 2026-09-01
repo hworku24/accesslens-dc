@@ -1,0 +1,12 @@
+{
+  "model_id": "projectsidewalk/quantized_curb_ramp_dinov2_tiny_onnx",
+  "revision": "a9da393f2b41d72f5252ba9e50291168bdcfd668",
+  "license": "MIT",
+  "downloaded_at": "2026-09-01T18:32:47.224242+00:00",
+  "files_sha256": {
+    "model_quantized.onnx": "35405fe96dd815298923d8f008842915c30265e1247a285a7d680c2c0fb20cb1",
+    "config.json": "9da33ba25ed112f814af242dc0570126b6ed1dea80474edd2a57c0b6441939bd",
+    "preprocessor_config.json": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828"
+  },
+  "source": "https://huggingface.co/projectsidewalk/quantized_curb_ramp_dinov2_tiny_onnx"
+}

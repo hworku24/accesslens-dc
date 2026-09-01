@@ -1,0 +1,9 @@
+{
+  "status": "frozen_v1_2026-09-01_after_balanced_pilot",
+  "present_probability": 0.7,
+  "absent_probability": 0.3,
+  "maximum_heading_difference_degrees": 35.0,
+  "maximum_camera_distance_meters": 35.0,
+  "development_batch": "12 records and 22 Mapillary images from the balanced pilot",
+  "rationale": "The policy intentionally favors abstention under cross-source domain shift. The 87.5 percent record-level abstention rate is retained as a finding and will not be reduced by tuning on held-out records."
+}

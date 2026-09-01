@@ -1,0 +1,11 @@
+{
+  "status": "frozen_v1_2026-09-01_after_balanced_pilot",
+  "minimum_width": 640,
+  "minimum_height": 480,
+  "minimum_blur_variance": 60.0,
+  "minimum_brightness": 35.0,
+  "maximum_brightness": 220.0,
+  "minimum_contrast": 25.0,
+  "development_batch": "12 records and 22 Mapillary images from the balanced pilot",
+  "rationale": "The numeric gate rejected three low-contrast images. Semantic view relevance remains a separate human or model eligibility decision."
+}
