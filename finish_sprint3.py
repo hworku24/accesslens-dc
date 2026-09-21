@@ -30,7 +30,7 @@ SOURCE_PREDICTIONS = ROOT / "outputs/project_sidewalk_validator_pilot/prediction
 TARGET_PREDICTIONS = ROOT / "outputs/project_sidewalk_target_crops_pilot/predictions.csv"
 PILOT_COVERAGE = ROOT / "data/processed/mapillary_pilot_coverage_results.csv"
 RESULT_MAP = ROOT / "outputs/pilot_result_map.html"
-STAKEHOLDER_MEMO = ROOT / "outputs/stakeholder_memo.md"
+STAKEHOLDER_MEMO = ROOT / "outputs/stakeholder_memo_sprint3.md"
 
 VALID_TRUTH = {"ramp_present", "ramp_absent", "cannot_determine"}
 VALID_QUALITY = {"good", "usable", "poor", "unusable"}

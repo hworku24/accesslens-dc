@@ -1,39 +1,191 @@
-# AccessLens DC stakeholder memo
+# AccessLens DC: curb-ramp inventory QA pilot
 
 Date: 2026-09-21
 
 ## Decision
 
-AccessLens DC can organize inventory, imagery, quality checks, model decisions, and human
-review in one repeatable workflow. The 12-location pilot is too small for an operational
-performance claim. A larger labeled evaluation is the next decision point.
+Keep the workflow as an evidence and human-review tool. Do not use the tested model to
+clear inventory records or make accessibility findings.
 
-## Evidence
+Target-centered cropping raised model coverage from 11.1 percent to 77.8 percent, but
+answered-case accuracy was 14.3 percent. Six of seven answered predictions were wrong.
+The model also gave confidence scores of at least 0.83 on all seven answered cases, so
+its scores were not calibrated for this Mapillary pilot.
 
-- DDOT records audited: 34,859
-- Balanced pilot records: 12
-- Blind label-pass agreements: 5
-- Direct label conflicts adjudicated: 1
-- Final cannot-determine labels: 3
-- Final scorable records: 9
-- Target-model answered records: 7
-- Target-model coverage: 77.8%
-- Target-model accuracy on answered records: 14.3%
-- Source-view model coverage: 11.1%
-- Inventory baseline accuracy: 44.4%
+The next decision gate is a larger, independently reviewed, target-domain dataset. Use
+at least 50 usable records for development, keep a separate held-out set, and compare a
+Mapillary-trained classifier with an ArcGIS route before selecting a model.
 
-Accuracy describes answered, scorable records. Coverage and imagery insufficiency must
-appear beside it.
+## Question and design
 
-## Use boundary
+AccessLens DC asks whether licensed, refreshable street imagery can help keep a curb-ramp
+inventory current between field assessments. The output is a queue of records for human
+review. It covers ramp presence, visible absence, imagery sufficiency, provenance, and
+inventory disagreement.
 
-The output screens records for human review. It does not establish ADA or PROWAG
-compliance. Slope, width, drainage, grade breaks, and tolerance decisions require
-calibrated measurement, field inspection, or qualified professional review.
+The pilot used:
 
-## Next work
+- DDOT's 34,859-record ADA curb-ramp inventory as a 2016 historical baseline
+- A seeded 12-location sample across three DC study areas and four inventory conditions
+- Mapillary street imagery with capture dates and retained image hashes
+- OpenCV checks for blur, brightness, contrast, and resolution
+- A pinned Project Sidewalk DINOv2 curb-ramp validator running locally through ONNX
+- Two blind human-label passes followed by written conflict adjudication
+- A second inventory-history review under a four-part QA rubric
 
-1. Expand to at least 50 usable labeled locations across the frozen strata.
-2. Separate development and held-out records before threshold changes.
-3. Add a second reviewer and report agreement.
-4. Investigate review-queue records with independent imagery or field evidence.
+The paid VLM arms in the original research plan were excluded under the project's
+zero-cost constraint. The local model and all processing ran without a paid API.
+
+## Results
+
+The 12-location pilot found imagery for 11 locations and produced nine scorable labels.
+Three records remained `cannot_determine`. Five of the 12 blind labels agreed exactly,
+six had one usable evidence set, and one present-versus-absent conflict required a
+written decision.
+
+| Predictor | Answered | Coverage | Precision | Recall | F1 | Accuracy | 95% accuracy interval |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| DDOT 2016 inventory | 9/9 | 100.0% | 28.6% | 100.0% | 44.4% | 44.4% | 18.9% to 73.3% |
+| Source-view model | 1/9 | 11.1% | Not estimable | Not estimable | Not estimable | 100.0% | 20.6% to 100.0% |
+| Target-centered model | 7/9 | 77.8% | 0.0% | 0.0% | Not estimable | 14.3% | 2.6% to 51.3% |
+
+Precision, recall, and F1 above use `ramp_present` as the positive class. The source-view
+result is one answered record and does not support a performance claim. The wide
+intervals reflect the small pilot.
+
+Target-centered framing fixed much of the view-eligibility problem. It did not fix
+cross-source transfer. The validator was trained for centered curb-ramp candidates from
+a different imagery process. Its confident errors on Mapillary crops make automated
+clearance unsafe.
+
+## Disagreement adjudication
+
+The final review has 14 units because one location can contribute an inventory mismatch
+and a model error.
+
+| Frozen category | Review units |
+|---|---:|
+| Model wrong | 6 |
+| World changed | 0 |
+| Inventory error | 0 |
+| Imagery insufficient | 8 |
+
+Five of the eight imagery-insufficient units have scorable current truth but unresolved
+inventory history. Their available captures date from 2019 through 2025. No independent
+2016 reference is present, so the evidence cannot separate a later physical change from
+an error in the 2016 inventory. The other three units lack sufficient current imagery
+for a reliable present or absent label.
+
+The result is a data-integrity finding with a strict evidence boundary. Five current
+observations disagree with the inventory, but none can be called inventory error or
+world change from the available evidence.
+
+## FHWA data-quality view
+
+FHWA describes six common safety-data quality dimensions: timeliness, accuracy,
+completeness, uniformity, integration, and accessibility. AccessLens measures or records
+each one at pilot scale.
+
+| Dimension | Pilot evidence |
+|---|---|
+| Timeliness | Inventory year and per-image capture dates remain attached to every record. |
+| Accuracy | Resolved human truth, confusion counts, confidence intervals, and review queues are retained. |
+| Completeness | Missing imagery, model abstention, null fields, and `cannot_determine` labels remain counted. |
+| Uniformity | One label contract and one frozen scoring policy apply to all model arms. |
+| Integration | Record IDs link inventory, coordinates, imagery, quality checks, predictions, and decisions. |
+| Accessibility | Reproducible CSV, JSON, Markdown, and local HTML outputs are generated by scripts. |
+
+Source: [FHWA, Unit 3: Measuring Safety](https://highways.dot.gov/safety/learn-safety/road-safety-fundamentals-html-version/unit-3-measuring-safety).
+
+## Field-review cost
+
+For the operating analysis, `ramp_absent` is the review target. A false positive wastes
+a field visit. A false negative misses an absent ramp. Model abstentions go to review.
+
+| Predictor | Field reviews | True flags | Wasted visits | Missed absent ramps |
+|---|---:|---:|---:|---:|
+| DDOT 2016 inventory | 2/9 | 2 | 0 | 5 |
+| Source-view model | 9/9 | 7 | 2 | 0 |
+| Target-centered model | 4/9 | 2 | 2 | 5 |
+
+At a 5-to-1 missed-ramp to wasted-visit cost ratio, the weighted pilot costs are 25 for
+the inventory baseline, 2 for the source-view model, and 27 for the target-centered
+model. The source-view model gets that low cost by sending every scorable record to the
+field, so it provides no screening reduction.
+
+A condition-weighted illustration applies the target-model review rate within each
+pilot stratum to the 34,682 non-null inventory conditions. It routes about 12,963 records
+to review. At an assumed $100 per visit, that is about $1.30 million. The strata contain
+only two or three scorable pilot records each, so this is a workload illustration and
+cannot support a city budget.
+
+## Build, buy, or collect data
+
+| Option | Measured result or current evidence | Cost and control | Recommendation |
+|---|---|---|---|
+| Current Project Sidewalk validator | 14.3% answered-case accuracy at 77.8% coverage | MIT model, local CPU, no marginal API fee, full audit trail | Reject for automated clearance. Keep as a documented baseline. |
+| ArcGIS deep-learning workflow | Not tested in this pilot | Fits feature-layer and geoprocessing workflows; Image Analyst or other ArcGIS licenses may be required | Test if the client already uses ArcGIS and can supply local imagery and labels. |
+| Custom Mapillary classifier | Not trained because the pilot is too small | Open-source stack and local control; requires target-domain labels, review time, and compute | Collect data first, then train with location-grouped development and held-out splits. |
+| Field and professional assessment | Human truth and calibrated measurements remain required | Highest unit cost; supports dimensions and compliance decisions | Use for flagged records and formal accessibility evaluation. |
+
+Esri documents pretrained, custom, and ArcGIS-trained model routes, with packages for
+object detection and image classification. Esri also documents a Douglas County curb-ramp
+inventory project that used one-inch aerial imagery and local training data. Those
+examples support an ArcGIS evaluation path for an ArcGIS-native client, but they do not
+establish performance on this street-imagery sample.
+
+Sources: [ArcGIS deep-learning models](https://pro.arcgis.com/en/pro-app/3.4/help/analysis/image-analyst/deep-learning-models-in-arcgis.htm), [Esri curb-ramp inventory case](https://www.esri.com/en-us/lg/industry/public-works/stories/county-innovates-using-geoai-to-inventory-ada-curb-ramps-saving-significant-time-money).
+
+RampNet provides a funded-team reference point. Its corrected one-to-one evaluation at
+the documented 0.55 operating point reports 0.949 precision and 0.873 recall on a
+1,000-panorama gold set. Its authors warn that city and imagery differences require a
+locally labeled sample and a deployment-specific threshold. AccessLens did not run
+RampNet because its training and primary benchmark depend on Google Street View imagery,
+which is outside this project's source policy.
+
+Source: [Project Sidewalk RampNet repository and July 2026 evaluation correction](https://github.com/ProjectSidewalk/RampNet).
+
+## Accessibility boundary
+
+The 2023 Access Board rule sets technical criteria that a single uncalibrated street
+image cannot verify reliably. Examples include an 8.3 percent maximum curb-ramp running
+slope in R304.2.1, a 2.1 percent maximum cross slope in R304.2.2, a 48-inch minimum clear
+width in R304.5.1.1, and the change-of-grade rule in R304.5.2. Detectable warning surface
+geometry appears in R305.
+
+Source: [U.S. Access Board PROWAG technical requirements](https://www.access-board.gov/prowag/technical.html).
+
+The Access Board guidelines become enforceable when the authorized federal agencies
+adopt them as standards. DOT adopted PROWAG for new construction and alterations of
+transit stops in the public right-of-way, effective January 17, 2025. The project does
+not extend that adoption to every curb ramp or claim a legal determination.
+
+Sources: [Access Board PROWAG preamble](https://www.access-board.gov/prowag/preamble.html), [U.S. DOT final rule, 89 FR 102800](https://www.transportation.gov/regulations/federal-register-documents/2024-29990).
+
+AccessLens can screen for visible presence, visible absence, gross obstruction, and
+evidence sufficiency. It cannot determine slope, width, drainage, grade breaks, or legal
+compliance. Those decisions require calibrated measurement, LiDAR, field inspection, or
+qualified professional review.
+
+## Licensing and reproducibility
+
+Mapillary states that its imagery is shared under CC BY-SA and may be used and modified
+with attribution and share-alike duties. The repository keeps attribution, capture dates,
+image IDs, source hashes, crop hashes, and fetch code. The image directory stays outside
+version control.
+
+Sources: [Mapillary CC BY-SA guidance](https://help.mapillary.com/hc/en-us/articles/115001770409-CC-BY-SA-license-for-open-data), [Mapillary platform introduction](https://help.mapillary.com/hc/en-us/articles/115001770269-An-Introduction-to-Mapillary).
+
+The local validator is pinned to revision
+`a9da393f2b41d72f5252ba9e50291168bdcfd668`. Its ONNX file SHA256 is
+`35405fe96dd815298923d8f008842915c30265e1247a285a7d680c2c0fb20cb1`.
+
+## Ship decision
+
+Ship the evidence workflow for a larger controlled evaluation. Do not ship the tested
+model as an automated inventory updater. Require human review for every proposed change,
+retain abstentions, and keep compliance decisions outside the image-classification scope.
+
+The next test needs at least 50 usable target-domain records, a second reviewer, a frozen
+development and held-out split, and an ArcGIS or custom classifier comparison on the same
+records.

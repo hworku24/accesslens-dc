@@ -37,7 +37,12 @@ Updated: 2026-09-21
 - Adjudicated one direct label conflict with a written reason.
 - Wrote final Sprint 3 metrics, result map, review queues, stakeholder memo, and project
   summary.
-- Passed 41 automated tests.
+- Built the Sprint 4 inventory-history adjudication interface for five disagreements.
+- Kept all five historical causes unresolved because only post-2016 evidence is available.
+- Produced a 14-unit QA split with 6 model errors and 8 imagery-insufficient cases.
+- Added field-review cost sensitivity at 1x, 5x, and 10x missed-ramp cost ratios.
+- Completed the cited decision memo and project walkthrough.
+- Passed 48 automated tests.
 
 ## Sprint 2 result
 
@@ -63,9 +68,20 @@ The framing change improved eligibility but did not solve cross-source model tra
 The published Project Sidewalk validator is unsuitable for this Mapillary pilot without
 new training data or a different model.
 
+## Sprint 4 result
+
+- Five inventory-truth disagreements received record-specific historical-cause review.
+- All five remain unresolved because the available captures date from 2019 through 2025.
+- Six answered target-model predictions disagreed with resolved human truth.
+- Three records remained insufficient for a current present or absent label.
+- The source-view policy avoided missed absent ramps by sending all nine scorable records
+  to field review.
+- The inventory baseline and target-centered policy each missed five of seven absent ramps.
+- The ship decision keeps the evidence workflow and rejects automated model clearance.
+
 ## Next scale-up
 
-1. Collect the larger development and held-out batches.
+1. Collect separate development and held-out batches.
 2. Label at least 50 usable records, keeping insufficient imagery as a measured outcome.
 3. Add a second reviewer and report agreement.
 4. Train or select a model using imagery closer to the Mapillary deployment domain.

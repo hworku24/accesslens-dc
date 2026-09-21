@@ -155,6 +155,20 @@ model's published validation task to this Mapillary pilot.
 See `outputs/sprint3_pilot_report.md`, `outputs/stakeholder_memo.md`, and
 `outputs/pilot_result_map.html`.
 
+Sprint 4 is complete. Five inventory disagreements received historical-cause review.
+All five remain unresolved because every available capture is newer than the 2016
+inventory and no independent 2016 reference is present. The final QA split contains six
+model errors, five unresolved inventory-history cases, and three records with insufficient
+current imagery.
+
+The field-review analysis treats absent ramps as the review target and routes abstentions
+to review. The source-view model avoided missed absent ramps by sending every scorable
+record to the field. The inventory baseline and target-centered model each missed five of
+seven absent ramps. None of the tested policies supports automated clearance.
+
+See `outputs/sprint4_adjudication_report.md`, `outputs/sprint4_screening_costs.md`,
+`outputs/stakeholder_memo.md`, and `outputs/sprint4_project_walkthrough.md`.
+
 After exporting all 12 target-crop labels, finish reconciliation and scoring with:
 
 ```bash
@@ -163,3 +177,11 @@ After exporting all 12 target-crop labels, finish reconciliation and scoring wit
 
 Direct present-versus-absent conflicts produce a manual adjudication template. Each
 conflict requires a final label and written reason before the script writes final metrics.
+
+Regenerate the Sprint 4 QA outputs with:
+
+```bash
+.venv/bin/python make_inventory_adjudication_app.py
+.venv/bin/python finish_sprint4.py
+.venv/bin/python build_sprint4_analysis.py
+```

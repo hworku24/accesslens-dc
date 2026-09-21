@@ -1,0 +1,10 @@
+model,records,field_reviews,field_review_rate,abstentions_routed_to_review,true_review_flags,wasted_field_visits_fp,missed_absent_ramps_fn,cleared_present_ramps_tn,false_positive_cost,false_negative_cost,weighted_cost,weighted_cost_per_record
+DDOT 2016 inventory baseline,9,2,0.2222222222222222,0,2,0,5,2,1,1,5,0.5555555555555556
+DDOT 2016 inventory baseline,9,2,0.2222222222222222,0,2,0,5,2,1,5,25,2.7777777777777777
+DDOT 2016 inventory baseline,9,2,0.2222222222222222,0,2,0,5,2,1,10,50,5.555555555555555
+Project Sidewalk source-view model,9,9,1.0,8,7,2,0,0,1,1,2,0.2222222222222222
+Project Sidewalk source-view model,9,9,1.0,8,7,2,0,0,1,5,2,0.2222222222222222
+Project Sidewalk source-view model,9,9,1.0,8,7,2,0,0,1,10,2,0.2222222222222222
+Project Sidewalk target-centered model,9,4,0.4444444444444444,2,2,2,5,0,1,1,7,0.7777777777777778
+Project Sidewalk target-centered model,9,4,0.4444444444444444,2,2,2,5,0,1,5,27,3.0
+Project Sidewalk target-centered model,9,4,0.4444444444444444,2,2,2,5,0,1,10,52,5.777777777777778
