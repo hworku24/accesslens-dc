@@ -1,0 +1,95 @@
+{
+  "model_name": "projectsidewalk_quantized_curb_ramp_dinov2_tiny_onnx",
+  "confidence_threshold": 0.7,
+  "overall": {
+    "counts": {
+      "true_positive": 0,
+      "true_negative": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "answered": 1,
+      "truth_records": 12,
+      "scorable_truth_records": 9,
+      "cannot_determine": 3,
+      "abstained": 8
+    },
+    "metrics": {
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "accuracy": 1.0,
+      "coverage": 0.1111,
+      "abstention_rate": 0.8889,
+      "imagery_insufficient_rate": 0.25
+    },
+    "intervals_95": {
+      "precision": {
+        "low": null,
+        "high": null
+      },
+      "recall": {
+        "low": null,
+        "high": null
+      },
+      "accuracy": {
+        "low": 0.2065,
+        "high": 1.0
+      }
+    }
+  },
+  "per_inventory_condition": {
+    "Missing": {
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 1,
+        "false_positive": 0,
+        "false_negative": 0,
+        "answered": 1
+      },
+      "metrics": {
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "accuracy": 1.0
+      },
+      "intervals_95": {
+        "precision": {
+          "low": null,
+          "high": null
+        },
+        "recall": {
+          "low": null,
+          "high": null
+        },
+        "accuracy": {
+          "low": 0.2065,
+          "high": 1.0
+        }
+      }
+    }
+  },
+  "population_reweighted": {
+    "included_population_weight": 0.112,
+    "counts": {
+      "true_positive": 0.0,
+      "true_negative": 1.0,
+      "false_positive": 0.0,
+      "false_negative": 0.0,
+      "answered": 1.0
+    },
+    "metrics": {
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "accuracy": 1.0
+    },
+    "intervals_95": {
+      "method": null,
+      "note": "Not estimated for the pilot. Wilson intervals are not valid on normalized population-weighted pseudo-counts."
+    }
+  },
+  "latency_ms": {
+    "count": 12,
+    "mean": 16.086
+  }
+}

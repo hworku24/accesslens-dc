@@ -1,0 +1,11 @@
+{
+  "status": "frozen_v1_2026-09-01_after_projection_development",
+  "minimum_width": 224,
+  "minimum_height": 224,
+  "minimum_blur_variance": 60.0,
+  "minimum_brightness": 35.0,
+  "maximum_brightness": 220.0,
+  "minimum_contrast": 25.0,
+  "development_batch": "19 target-centered crops derived from the balanced pilot",
+  "rationale": "The minimum resolution matches the published 224 by 224 model crop. Blur, brightness, and contrast thresholds remain unchanged from source-image QA."
+}

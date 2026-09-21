@@ -1,0 +1,2 @@
+adjudication_reason,first_pass_truth_label,record_id,target_crop_truth_label,truth_label
+Ramp is not visible in either evidence set.,ramp_present,ADA_CurbRampPt_6680,ramp_absent,ramp_absent

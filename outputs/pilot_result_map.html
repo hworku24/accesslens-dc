@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AccessLens DC pilot screening map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root { --ink:#14242c; --paper:#f4f1e8; --line:#d8d2c2; --teal:#087f8c; --orange:#d96724; --gray:#64748b; }
+    * { box-sizing:border-box; } html, body { height:100%; margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); }
+    .layout { display:grid; grid-template-columns:360px 1fr; height:100%; }
+    aside { padding:24px; overflow:auto; background:var(--paper); border-right:1px solid var(--line); }
+    #map { height:100%; } h1 { font-size:26px; margin:0 0 8px; } h2 { font-size:15px; margin:24px 0 10px; }
+    p { line-height:1.45; } .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:20px 0; }
+    .stat { background:white; border:1px solid var(--line); border-radius:9px; padding:12px; }
+    .stat strong { display:block; font-size:25px; } .stat span { font-size:12px; color:#5b6870; }
+    .legend-row { display:flex; gap:9px; align-items:center; margin:9px 0; font-size:14px; }
+    .swatch { width:12px; height:12px; border-radius:50%; flex:0 0 auto; }
+    .note { font-size:12px; color:#52616b; border-top:1px solid var(--line); padding-top:15px; margin-top:22px; }
+    .leaflet-popup-content { line-height:1.5; min-width:230px; } .code { font-family:ui-monospace,monospace; font-size:11px; }
+    @media(max-width:760px) { .layout { grid-template-columns:1fr; grid-template-rows:auto 65vh; } aside { padding:16px; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside>
+    <h1>AccessLens DC</h1>
+    <p>Pilot screening results for 12 DDOT curb-ramp inventory records.</p>
+    <div class="grid">
+      <div class="stat"><strong>11/12</strong><span>locations with imagery</span></div>
+      <div class="stat"><strong>8/12</strong><span>target-model decisions</span></div>
+      <div class="stat"><strong>4</strong><span>model abstentions</span></div>
+      <div class="stat"><strong>2</strong><span>inventory-model disagreements</span></div>
+    </div>
+    <h2>Target-centered model decision</h2>
+    <div class="legend-row"><span class="swatch" style="background:var(--teal)"></span>Ramp present</div>
+    <div class="legend-row"><span class="swatch" style="background:var(--orange)"></span>Ramp absent</div>
+    <div class="legend-row"><span class="swatch" style="background:var(--gray)"></span>Abstain</div>
+    <p class="note">Historical DDOT conditions were recorded in 2016. Model decisions screen records for review. They do not establish ADA or PROWAG compliance. Human labels shown in popups were reconciled from blind source-view and target-crop passes under the frozen adjudication protocol.</p>
+  </aside>
+  <div id="map"></div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const points = [{"record_id": "ADA_CurbRampPt_18645", "latitude": 38.86849356883389, "longitude": -76.98087721690601, "study_area": "anacostia_fairlawn", "inventory_condition": "Fair", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 66, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "ramp_present", "target_model_confidence": 0.911955, "first_pass_truth": "ramp_absent", "review_code": "inventory_model_agreement", "view_changed_decision": true}, {"record_id": "ADA_CurbRampPt_11753", "latitude": 38.86581346352636, "longitude": -76.97945035983177, "study_area": "anacostia_fairlawn", "inventory_condition": "Good", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 84, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "abstain", "target_model_confidence": 0.687132, "first_pass_truth": "ramp_present", "review_code": "model_abstained", "view_changed_decision": false}, {"record_id": "ADA_CurbRampPt_31142", "latitude": 38.85930735726929, "longitude": -76.9886330409881, "study_area": "anacostia_fairlawn", "inventory_condition": "Missing", "inventory_prediction": "ramp_absent", "year_inspected": "2016", "candidate_image_count": 55, "coverage_available": true, "source_model_prediction": "ramp_absent", "target_model_prediction": "ramp_absent", "target_model_confidence": 0.962353, "first_pass_truth": "ramp_absent", "review_code": "inventory_model_agreement", "view_changed_decision": false}, {"record_id": "ADA_CurbRampPt_6680", "latitude": 38.87697004681785, "longitude": -76.96348681752639, "study_area": "anacostia_fairlawn", "inventory_condition": "Non-Compliant", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 87, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "ramp_present", "target_model_confidence": 0.998715, "first_pass_truth": "ramp_absent", "review_code": "inventory_model_agreement", "view_changed_decision": true}, {"record_id": "ADA_CurbRampPt_3245", "latitude": 38.92974563034023, "longitude": -77.02763289023981, "study_area": "columbia_heights_petworth", "inventory_condition": "Fair", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 45, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "ramp_present", "target_model_confidence": 0.989651, "first_pass_truth": "ramp_absent", "review_code": "inventory_model_agreement", "view_changed_decision": true}, {"record_id": "ADA_CurbRampPt_28492", "latitude": 38.92599186840451, "longitude": -77.03954525254238, "study_area": "columbia_heights_petworth", "inventory_condition": "Good", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 0, "coverage_available": false, "source_model_prediction": "abstain", "target_model_prediction": "abstain", "target_model_confidence": 0.0, "first_pass_truth": "ramp_absent", "review_code": "imagery_unavailable", "view_changed_decision": false}, {"record_id": "ADA_CurbRampPt_2568", "latitude": 38.93555188315029, "longitude": -77.02712071296699, "study_area": "columbia_heights_petworth", "inventory_condition": "Missing", "inventory_prediction": "ramp_absent", "year_inspected": "2016", "candidate_image_count": 49, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "ramp_present", "target_model_confidence": 0.994947, "first_pass_truth": "ramp_absent", "review_code": "inventory_model_disagreement", "view_changed_decision": true}, {"record_id": "ADA_CurbRampPt_23006", "latitude": 38.93402871611946, "longitude": -77.02616414111131, "study_area": "columbia_heights_petworth", "inventory_condition": "Non-Compliant", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 99, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "ramp_present", "target_model_confidence": 0.999392, "first_pass_truth": "ramp_absent", "review_code": "inventory_model_agreement", "view_changed_decision": true}, {"record_id": "ADA_CurbRampPt_27682", "latitude": 38.873359991402225, "longitude": -76.99166333582677, "study_area": "navy_yard_capitol_riverfront", "inventory_condition": "Fair", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 8, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "abstain", "target_model_confidence": 0.0, "first_pass_truth": "cannot_determine", "review_code": "model_abstained", "view_changed_decision": false}, {"record_id": "ADA_CurbRampPt_20386", "latitude": 38.87945040421178, "longitude": -77.0001454777056, "study_area": "navy_yard_capitol_riverfront", "inventory_condition": "Good", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 26, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "ramp_absent", "target_model_confidence": 0.830173, "first_pass_truth": "ramp_present", "review_code": "inventory_model_disagreement", "view_changed_decision": true}, {"record_id": "ADA_CurbRampPt_19095", "latitude": 38.88863329482785, "longitude": -76.99609936102561, "study_area": "navy_yard_capitol_riverfront", "inventory_condition": "Missing", "inventory_prediction": "ramp_absent", "year_inspected": "2016", "candidate_image_count": 22, "coverage_available": true, "source_model_prediction": "abstain", "target_model_prediction": "abstain", "target_model_confidence": 0.0, "first_pass_truth": "cannot_determine", "review_code": "model_abstained", "view_changed_decision": false}, {"record_id": "ADA_CurbRampPt_22233", "latitude": 38.885536428453804, "longitude": -76.99014234429353, "study_area": "navy_yard_capitol_riverfront", "inventory_condition": "Non-Compliant", "inventory_prediction": "ramp_present", "year_inspected": "2016", "candidate_image_count": 26, "coverage_available": true, "source_model_prediction": "ramp_present", "target_model_prediction": "ramp_present", "target_model_confidence": 0.999871, "first_pass_truth": "cannot_determine", "review_code": "inventory_model_agreement", "view_changed_decision": false}];
+const humanLabelName = "Resolved human truth";
+const colors = {ramp_present:'#087f8c', ramp_absent:'#d96724', abstain:'#64748b'};
+const labels = {ramp_present:'Ramp present', ramp_absent:'Ramp absent', abstain:'Abstain', cannot_determine:'Cannot determine', pending:'Pending'};
+const map = L.map('map').setView([38.90,-77.01],12);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+const bounds = [];
+for (const point of points) {
+  const marker = L.circleMarker([point.latitude,point.longitude],{radius:9,color:'#fff',weight:2,fillColor:colors[point.target_model_prediction],fillOpacity:.92}).addTo(map);
+  const confidence = point.target_model_prediction === 'abstain' ? 'n/a' : `${(point.target_model_confidence*100).toFixed(1)}%`;
+  marker.bindPopup(`<strong>${point.record_id}</strong><br>${point.study_area.replaceAll('_',' ')}<br><br><b>DDOT 2016:</b> ${point.inventory_condition}<br><b>Candidate images:</b> ${point.candidate_image_count}<br><b>Source-view model:</b> ${labels[point.source_model_prediction]}<br><b>Target-centered model:</b> ${labels[point.target_model_prediction]} (${confidence})<br><b>${humanLabelName}:</b> ${labels[point.first_pass_truth]}<br><b>Review code:</b> <span class="code">${point.review_code}</span>`);
+  bounds.push([point.latitude,point.longitude]);
+}
+if (bounds.length) map.fitBounds(bounds,{padding:[30,30]});
+</script>
+</body>
+</html>

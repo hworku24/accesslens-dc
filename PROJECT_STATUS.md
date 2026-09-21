@@ -1,6 +1,6 @@
 # AccessLens DC project status
 
-Updated: 2026-09-01
+Updated: 2026-09-21
 
 ## Completed
 
@@ -22,7 +22,22 @@ Updated: 2026-09-01
 - Scored the DDOT inventory baseline and Project Sidewalk validator.
 - Froze the pilot quality, view-eligibility, and probability thresholds.
 - Produced the Sprint 2 model comparison and disagreement report.
-- Passed 28 automated tests.
+- Built target-centered directional crops and panorama projections with retained source
+  and crop hashes.
+- Audited 19 target-centered crops and ran the pinned Project Sidewalk model on them.
+- Built and browser-tested a separate blind target-crop adjudication interface.
+- Generated the pilot screening map with coverage, decisions, abstentions, and qualified
+  inventory-model disagreements.
+- Drafted the stakeholder memo and project summary.
+- Added a post-label pipeline that validates the export, compares blind passes, requires
+  written reasons for direct conflicts, writes resolved truth, and reruns all model arms.
+- Added automatic refresh of the resolved result map and final stakeholder memo.
+- Added a GitHub Actions workflow for the full Python test suite.
+- Completed the blind target-crop label pass and reconciled all 12 records.
+- Adjudicated one direct label conflict with a written reason.
+- Wrote final Sprint 3 metrics, result map, review queues, stakeholder memo, and project
+  summary.
+- Passed 41 automated tests.
 
 ## Sprint 2 result
 
@@ -32,19 +47,26 @@ Updated: 2026-09-01
   coverage. Its single correct answer is insufficient for a performance claim.
 - Three historical inventory records entered the qualified review queue.
 
-## Sprint 3 next run
+## Sprint 3 result
 
-1. Implement target-centered directional crops and panorama projection.
-2. Collect the larger development and held-out batches.
-3. Label at least 50 usable records, keeping insufficient imagery as a measured outcome.
-4. Run the frozen policy on held-out records.
-5. Generate the final result map, review queue, and stakeholder memo.
+- Five of 12 blind labels agreed exactly across the two view sets.
+- Six records had one scorable pass and one cannot-determine pass.
+- One present-versus-absent conflict required manual adjudication.
+- The resolved truth set contains nine scorable and three cannot-determine records.
+- The DDOT inventory baseline achieved 44.4 percent accuracy at 100 percent coverage.
+- The source-view model answered one of nine scorable records, for 11.1 percent coverage.
+- Target-centered framing raised model coverage to 77.8 percent.
+- The target-centered model achieved 14.3 percent answered-case accuracy, with a 95
+  percent interval of 2.6 to 51.3 percent.
 
-## Final artifacts still to produce
+The framing change improved eligibility but did not solve cross-source model transfer.
+The published Project Sidewalk validator is unsuitable for this Mapillary pilot without
+new training data or a different model.
 
-- coverage report;
-- completed human-label sheet and self-agreement result;
-- model comparison table;
-- adjudicated disagreement log;
-- result map and review queue;
-- two-page stakeholder memo and project summary.
+## Next scale-up
+
+1. Collect the larger development and held-out batches.
+2. Label at least 50 usable records, keeping insufficient imagery as a measured outcome.
+3. Add a second reviewer and report agreement.
+4. Train or select a model using imagery closer to the Mapillary deployment domain.
+5. Run the frozen policy on held-out records.

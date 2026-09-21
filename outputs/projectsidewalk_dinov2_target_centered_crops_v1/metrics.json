@@ -1,0 +1,182 @@
+{
+  "model_name": "projectsidewalk_dinov2_target_centered_crops_v1",
+  "confidence_threshold": 0.7,
+  "overall": {
+    "counts": {
+      "true_positive": 1,
+      "true_negative": 1,
+      "false_positive": 4,
+      "false_negative": 1,
+      "answered": 7,
+      "truth_records": 12,
+      "scorable_truth_records": 8,
+      "cannot_determine": 4,
+      "abstained": 1
+    },
+    "metrics": {
+      "precision": 0.2,
+      "recall": 0.5,
+      "f1": 0.2857,
+      "accuracy": 0.2857,
+      "coverage": 0.875,
+      "abstention_rate": 0.125,
+      "imagery_insufficient_rate": 0.3333
+    },
+    "intervals_95": {
+      "precision": {
+        "low": 0.0362,
+        "high": 0.6245
+      },
+      "recall": {
+        "low": 0.0945,
+        "high": 0.9055
+      },
+      "accuracy": {
+        "low": 0.0822,
+        "high": 0.6411
+      }
+    }
+  },
+  "per_inventory_condition": {
+    "Fair": {
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 0,
+        "false_positive": 2,
+        "false_negative": 0,
+        "answered": 2
+      },
+      "metrics": {
+        "precision": 0.0,
+        "recall": null,
+        "f1": null,
+        "accuracy": 0.0
+      },
+      "intervals_95": {
+        "precision": {
+          "low": 0.0,
+          "high": 0.6576
+        },
+        "recall": {
+          "low": null,
+          "high": null
+        },
+        "accuracy": {
+          "low": 0.0,
+          "high": 0.6576
+        }
+      }
+    },
+    "Good": {
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 0,
+        "false_positive": 0,
+        "false_negative": 1,
+        "answered": 1
+      },
+      "metrics": {
+        "precision": null,
+        "recall": 0.0,
+        "f1": null,
+        "accuracy": 0.0
+      },
+      "intervals_95": {
+        "precision": {
+          "low": null,
+          "high": null
+        },
+        "recall": {
+          "low": 0.0,
+          "high": 0.7935
+        },
+        "accuracy": {
+          "low": 0.0,
+          "high": 0.7935
+        }
+      }
+    },
+    "Missing": {
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 1,
+        "false_positive": 1,
+        "false_negative": 0,
+        "answered": 2
+      },
+      "metrics": {
+        "precision": 0.0,
+        "recall": null,
+        "f1": null,
+        "accuracy": 0.5
+      },
+      "intervals_95": {
+        "precision": {
+          "low": 0.0,
+          "high": 0.7935
+        },
+        "recall": {
+          "low": null,
+          "high": null
+        },
+        "accuracy": {
+          "low": 0.0945,
+          "high": 0.9055
+        }
+      }
+    },
+    "Non-Compliant": {
+      "counts": {
+        "true_positive": 1,
+        "true_negative": 0,
+        "false_positive": 1,
+        "false_negative": 0,
+        "answered": 2
+      },
+      "metrics": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6667,
+        "accuracy": 0.5
+      },
+      "intervals_95": {
+        "precision": {
+          "low": 0.0945,
+          "high": 0.9055
+        },
+        "recall": {
+          "low": 0.2065,
+          "high": 1.0
+        },
+        "accuracy": {
+          "low": 0.0945,
+          "high": 0.9055
+        }
+      }
+    }
+  },
+  "population_reweighted": {
+    "included_population_weight": 1.0,
+    "counts": {
+      "true_positive": 0.2327,
+      "true_negative": 0.056,
+      "false_positive": 0.3936,
+      "false_negative": 0.3177,
+      "answered": 1.0
+    },
+    "metrics": {
+      "precision": 0.3715,
+      "recall": 0.4227,
+      "f1": 0.3955,
+      "accuracy": 0.2887
+    },
+    "intervals_95": {
+      "method": null,
+      "note": "Not estimated for the pilot. Wilson intervals are not valid on normalized population-weighted pseudo-counts."
+    }
+  },
+  "latency_ms": {
+    "count": 12,
+    "mean": 33.873
+  }
+}

@@ -141,3 +141,25 @@ Sprint 2 is complete. On eight adjudicated, scorable records, the DDOT inventory
 achieved 62.5 percent accuracy. The Project Sidewalk validator answered only one record,
 for 12.5 percent coverage, so its answered-case accuracy is not treated as a performance
 claim. See `outputs/sprint2_pilot_report.md` and `outputs/pilot_adjudication.csv`.
+
+Sprint 3 is complete. A second blind pass produced five exact label agreements, six cases
+where only one view set was scorable, and one direct conflict that received written
+manual adjudication. The resolved set contains nine scorable records and three
+cannot-determine records.
+
+Target-centered framing raised Project Sidewalk model coverage from 11.1 percent to 77.8
+percent on the resolved scorable set. Answered-case accuracy was 14.3 percent, with a 95
+percent interval of 2.6 to 51.3 percent. The result indicates poor transfer from the
+model's published validation task to this Mapillary pilot.
+
+See `outputs/sprint3_pilot_report.md`, `outputs/stakeholder_memo.md`, and
+`outputs/pilot_result_map.html`.
+
+After exporting all 12 target-crop labels, finish reconciliation and scoring with:
+
+```bash
+.venv/bin/python finish_sprint3.py /path/to/accesslens_target_crop_labels.csv
+```
+
+Direct present-versus-absent conflicts produce a manual adjudication template. Each
+conflict requires a final label and written reason before the script writes final metrics.

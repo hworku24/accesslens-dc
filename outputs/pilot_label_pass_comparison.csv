@@ -1,0 +1,13 @@
+first_pass_image_quality,first_pass_notes,first_pass_truth_label,inventory_condition,manual_adjudication_reason,manual_truth_label,passes_agree,provisional_truth_label,record_id,resolution_basis,resolution_status,study_area,target_crop_image_quality,target_crop_notes,target_crop_truth_label
+usable,,ramp_absent,Fair,,,false,ramp_absent,ADA_CurbRampPt_18645,source_view_evidence_only,resolved,anacostia_fairlawn,usable,,cannot_determine
+good,,ramp_present,Good,,,false,ramp_present,ADA_CurbRampPt_11753,source_view_evidence_only,resolved,anacostia_fairlawn,unusable,,cannot_determine
+good,,ramp_absent,Missing,,,false,ramp_absent,ADA_CurbRampPt_31142,source_view_evidence_only,resolved,anacostia_fairlawn,usable,,cannot_determine
+good,,ramp_present,Non-Compliant,,,false,,ADA_CurbRampPt_6680,direct_truth_conflict,manual_adjudication_required,anacostia_fairlawn,good,,ramp_absent
+good,,ramp_absent,Fair,,,true,ramp_absent,ADA_CurbRampPt_3245,passes_agree,resolved,columbia_heights_petworth,good,,ramp_absent
+unusable,,cannot_determine,Good,,,false,ramp_absent,ADA_CurbRampPt_28492,target_crop_evidence_only,resolved,columbia_heights_petworth,good,,ramp_absent
+usable,,ramp_absent,Missing,,,true,ramp_absent,ADA_CurbRampPt_2568,passes_agree,resolved,columbia_heights_petworth,usable,"2022-12-07 · 10.3 m · directional bearing crop is good, 2019-07-27 · 13.2 m · directional bearing crop is unusable ",ramp_absent
+good,,ramp_absent,Non-Compliant,,,false,ramp_absent,ADA_CurbRampPt_23006,source_view_evidence_only,resolved,columbia_heights_petworth,unusable,,cannot_determine
+unusable,,cannot_determine,Fair,,,true,cannot_determine,ADA_CurbRampPt_27682,passes_agree,resolved,navy_yard_capitol_riverfront,unusable,,cannot_determine
+usable,,ramp_present,Good,,,false,ramp_present,ADA_CurbRampPt_20386,source_view_evidence_only,resolved,navy_yard_capitol_riverfront,poor,,cannot_determine
+,,cannot_determine,Missing,,,true,cannot_determine,ADA_CurbRampPt_19095,passes_agree,resolved,navy_yard_capitol_riverfront,unusable,,cannot_determine
+poor,,cannot_determine,Non-Compliant,,,true,cannot_determine,ADA_CurbRampPt_22233,passes_agree,resolved,navy_yard_capitol_riverfront,unusable,,cannot_determine
