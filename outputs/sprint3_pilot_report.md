@@ -1,6 +1,5 @@
 # Sprint 3: target-centered pilot evaluation
 
-
 Completed: 2026-09-21
 
 ## Label reconciliation
@@ -22,8 +21,8 @@ written manual decision under the frozen adjudication protocol.
 | Project Sidewalk source-view model | 1/9 | 11.1% | not estimable | not estimable | not estimable | 100.0% | 20.6% to 100.0% |
 | Project Sidewalk target-centered model | 7/9 | 77.8% | 0.0% | 0.0% | not estimable | 14.3% | 2.6% to 51.3% |
 
-These pilot estimates have wide intervals and come from 12 locations. Report coverage,
-abstention, and imagery insufficiency beside accuracy.
+These pilot estimates have wide intervals and come from 12 locations. Coverage,
+abstention, and imagery insufficiency should be reported beside accuracy.
 
 ## Use boundary
 

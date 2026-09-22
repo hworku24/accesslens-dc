@@ -18,8 +18,8 @@ class ValidatorTests(unittest.TestCase):
     def test_any_positive_view_marks_present(self):
         result = aggregate_record_scores(
             [
-                {"inference_status": "scored", "curb_ramp_probability": 0.2},
-                {"inference_status": "scored", "curb_ramp_probability": 0.9},
+                {"inference_status": "scored", "validator_correct_probability": 0.2},
+                {"inference_status": "scored", "validator_correct_probability": 0.9},
             ],
             present_probability=0.7,
             absent_probability=0.3,
@@ -28,11 +28,19 @@ class ValidatorTests(unittest.TestCase):
 
     def test_uncertain_view_abstains(self):
         result = aggregate_record_scores(
-            [{"inference_status": "scored", "curb_ramp_probability": 0.55}],
+            [{"inference_status": "scored", "validator_correct_probability": 0.55}],
             present_probability=0.7,
             absent_probability=0.3,
         )
         self.assertEqual(result["predicted_label"], "abstain")
+
+    def test_legacy_score_field_remains_readable(self):
+        result = aggregate_record_scores(
+            [{"inference_status": "scored", "curb_ramp_probability": 0.9}],
+            present_probability=0.7,
+            absent_probability=0.3,
+        )
+        self.assertEqual(result["predicted_label"], "ramp_present")
 
     def test_rejected_views_abstain(self):
         result = aggregate_record_scores(

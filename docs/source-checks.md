@@ -1,6 +1,5 @@
 # Source checks
 
-
 Checked: 2026-09-21
 
 | Source | Claim checked |

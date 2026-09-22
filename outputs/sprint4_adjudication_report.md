@@ -1,6 +1,5 @@
 # Sprint 4: disagreement adjudication
 
-
 ## Review units
 
 - Inventory-truth disagreements: 5
@@ -19,11 +18,9 @@ disagree with resolved truth.
 | Inventory error | 0 |
 | Imagery insufficient | 8 |
 
-The imagery-insufficient total contains 5 cases
-where current imagery supports a present or absent label but cannot establish the cause
-of a 2016 inventory disagreement. It also contains
-3 records where current imagery cannot support a
-reliable present or absent label.
+The imagery-insufficient total contains 5 cases where current imagery supports a present
+or absent label but cannot establish the cause of a 2016 inventory disagreement. It also
+contains 3 records where current imagery cannot support a reliable present or absent label.
 
 ## Historical-cause decision
 

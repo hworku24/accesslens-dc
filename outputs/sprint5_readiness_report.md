@@ -1,6 +1,5 @@
 # Sprint 5 development readiness
 
-
 ## Development batch
 
 - Candidates: 72

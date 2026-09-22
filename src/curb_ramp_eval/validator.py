@@ -17,6 +17,19 @@ def softmax_pair(first: float, second: float) -> tuple[float, float]:
     return first_exp / denominator, second_exp / denominator
 
 
+def _validator_correct_probability(row: dict) -> float:
+    """Return the published validator's class-0 (`correct`) score.
+
+    `curb_ramp_probability` is accepted only for backward compatibility with cached pilot
+    outputs generated before the field was renamed.
+    """
+    if "validator_correct_probability" in row:
+        return float(row["validator_correct_probability"])
+    if "curb_ramp_probability" in row:
+        return float(row["curb_ramp_probability"])
+    raise KeyError("Missing validator_correct_probability")
+
+
 def aggregate_record_scores(
     image_results: list[dict],
     present_probability: float,
@@ -29,22 +42,22 @@ def aggregate_record_scores(
             "confidence": 0.0,
             "aggregation_reason": "no_eligible_images",
         }
-    maximum_present = max(float(row["curb_ramp_probability"]) for row in usable)
-    if maximum_present >= present_probability:
+    maximum_score = max(_validator_correct_probability(row) for row in usable)
+    if maximum_score >= present_probability:
         return {
             "predicted_label": "ramp_present",
-            "confidence": maximum_present,
+            "confidence": maximum_score,
             "aggregation_reason": "at_least_one_positive_view",
         }
-    if maximum_present <= absent_probability:
+    if maximum_score <= absent_probability:
         return {
             "predicted_label": "ramp_absent",
-            "confidence": 1 - maximum_present,
+            "confidence": 1 - maximum_score,
             "aggregation_reason": "all_views_negative",
         }
     return {
         "predicted_label": "abstain",
-        "confidence": max(maximum_present, 1 - maximum_present),
+        "confidence": max(maximum_score, 1 - maximum_score),
         "aggregation_reason": "probability_in_abstention_band",
     }
 
@@ -95,8 +108,8 @@ class OnnxCurbRampValidator:
         latency_ms = (time.perf_counter() - started) * 1000
         correct, incorrect = softmax_pair(float(output[0][0]), float(output[0][1]))
         return {
-            "curb_ramp_probability": round(correct, 6),
-            "incorrect_label_probability": round(incorrect, 6),
+            "validator_correct_probability": round(correct, 6),
+            "validator_incorrect_probability": round(incorrect, 6),
             "latency_ms": round(latency_ms, 3),
         }
 
@@ -137,4 +150,3 @@ def aggregate_all_records(
             }
         )
     return predictions
-

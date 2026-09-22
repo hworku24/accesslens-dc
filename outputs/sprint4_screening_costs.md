@@ -1,6 +1,5 @@
 # Sprint 4: screening cost analysis
 
-
 ## Operating rule
 
 A resolved `ramp_absent` record needs field review. A `ramp_absent` model decision or

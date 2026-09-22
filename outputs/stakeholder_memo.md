@@ -10,7 +10,7 @@ clear inventory records or make accessibility findings.
 Target-centered cropping raised model coverage from 11.1 percent to 77.8 percent, but
 answered-case accuracy was 14.3 percent. Six of seven answered predictions were wrong.
 The model also gave confidence scores of at least 0.83 on all seven answered cases, so
-its scores were not calibrated for this Mapillary pilot.
+high confidence did not correspond to high accuracy in this pilot.
 
 The next decision gate is a larger, independently reviewed, target-domain dataset. Use
 at least 50 usable records for development, keep a separate held-out set, and compare a
@@ -55,8 +55,8 @@ intervals reflect the small pilot.
 
 Target-centered framing fixed much of the view-eligibility problem. It did not fix
 cross-source transfer. The validator was trained for centered curb-ramp candidates from
-a different imagery process. Its confident errors on Mapillary crops make automated
-clearance unsafe.
+a different imagery process. Its confident errors on these Mapillary crops do not support
+automated clearance.
 
 ## Disagreement adjudication
 
@@ -114,29 +114,29 @@ model. The source-view model gets that low cost by sending every scorable record
 field, so it provides no screening reduction.
 
 A condition-weighted illustration applies the target-model review rate within each
-pilot stratum to the 34,682 non-null inventory conditions. It routes about 12,963 records
-to review. At an assumed $100 per visit, that is about $1.30 million. The strata contain
-only two or three scorable pilot records each, so this is a workload illustration and
-cannot support a city budget.
+pilot stratum to the 34,682 records in the four non-null inventory conditions used for
+population weighting. It routes about 12,963 records to review. At an assumed $100 per
+visit, that is about $1.30 million. The strata contain only two or three scorable pilot
+records each, so this is a workload illustration and cannot support a city budget.
 
 ## Build, buy, or collect data
 
 | Option | Measured result or current evidence | Cost and control | Recommendation |
 |---|---|---|---|
 | Current Project Sidewalk validator | 14.3% answered-case accuracy at 77.8% coverage | MIT model, local CPU, no marginal API fee, full audit trail | Reject for automated clearance. Keep as a documented baseline. |
-| ArcGIS deep-learning workflow | Not tested in this pilot | Fits feature-layer and geoprocessing workflows; Image Analyst or other ArcGIS licenses may be required | Test if the client already uses ArcGIS and can supply local imagery and labels. |
+| ArcGIS deep-learning workflow | Not tested in this pilot | Fits feature-layer and geoprocessing workflows; Image Analyst or other ArcGIS licenses may be required | Test if the deployment environment already uses ArcGIS and can supply local imagery and labels. |
 | Custom Mapillary classifier | Not trained because the pilot is too small | Open-source stack and local control; requires target-domain labels, review time, and compute | Collect data first, then train with location-grouped development and held-out splits. |
 | Field and professional assessment | Human truth and calibrated measurements remain required | Highest unit cost; supports dimensions and compliance decisions | Use for flagged records and formal accessibility evaluation. |
 
 Esri documents pretrained, custom, and ArcGIS-trained model routes, with packages for
 object detection and image classification. Esri also documents a Douglas County curb-ramp
 inventory project that used one-inch aerial imagery and local training data. Those
-examples support an ArcGIS evaluation path for an ArcGIS-native client, but they do not
-establish performance on this street-imagery sample.
+examples support an ArcGIS evaluation path when ArcGIS is already part of the operating
+environment, but they do not establish performance on this street-imagery sample.
 
 Sources: [ArcGIS deep-learning models](https://pro.arcgis.com/en/pro-app/3.4/help/analysis/image-analyst/deep-learning-models-in-arcgis.htm), [Esri curb-ramp inventory case](https://www.esri.com/en-us/lg/industry/public-works/stories/county-innovates-using-geoai-to-inventory-ada-curb-ramps-saving-significant-time-money).
 
-RampNet provides a funded-team reference point. Its corrected one-to-one evaluation at
+RampNet provides a published reference point. Its corrected one-to-one evaluation at
 the documented 0.55 operating point reports 0.949 precision and 0.873 recall on a
 1,000-panorama gold set. Its authors warn that city and imagery differences require a
 locally labeled sample and a deployment-specific threshold. AccessLens did not run

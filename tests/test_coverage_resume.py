@@ -2,6 +2,7 @@ import csv
 import sys
 import tempfile
 import unittest
+import urllib.error
 from pathlib import Path
 from unittest.mock import patch
 
@@ -63,7 +64,7 @@ class CoverageResumeTests(unittest.TestCase):
                 partial = list(csv.DictReader(stream))
             self.assertEqual([row["record_id"] for row in partial], ["a"])
 
-            with patch("curb_ramp_eval.mapillary.query_images", return_value=[] ) as query:
+            with patch("curb_ramp_eval.mapillary.query_images", return_value=[]) as query:
                 result = run_coverage_check(
                     candidate_path,
                     output_path,
@@ -72,6 +73,37 @@ class CoverageResumeTests(unittest.TestCase):
                 )
             self.assertEqual([row["record_id"] for row in result], ["a", "b"])
             self.assertEqual(query.call_count, 1)
+
+    def test_retryable_http_error_is_retried(self):
+        candidates = [
+            {
+                "record_id": "a",
+                "study_area": "x",
+                "condition": "Good",
+                "latitude": "38.9",
+                "longitude": "-77.0",
+            }
+        ]
+        rate_limit = urllib.error.HTTPError(
+            "https://graph.mapillary.com/images", 429, "rate limited", {}, None
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            candidate_path = Path(directory) / "candidates.csv"
+            output_path = Path(directory) / "coverage.csv"
+            write_csv(candidate_path, candidates)
+            with patch(
+                "curb_ramp_eval.mapillary.query_images",
+                side_effect=[rate_limit, []],
+            ) as query, patch("curb_ramp_eval.mapillary.time.sleep"):
+                result = run_coverage_check(
+                    candidate_path,
+                    output_path,
+                    token="test",
+                    delay_seconds=0,
+                    retry_attempts=2,
+                )
+            self.assertEqual(query.call_count, 2)
+            self.assertEqual(result[0]["coverage_available"], 0)
 
 
 if __name__ == "__main__":

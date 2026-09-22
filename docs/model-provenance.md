@@ -13,6 +13,13 @@
 - Published preprocessing: resize shortest edge to 256, center crop to 224 by 224,
   rescale to [0, 1], then ImageNet mean and standard-deviation normalization.
 
+The published class-0 score is stored as `validator_correct_probability`. It is the
+model's probability for its published `correct` class, not a calibrated probability that
+a curb ramp is physically present. AccessLens experimentally maps that score to
+present/absent/abstain decisions under frozen thresholds so cross-source transfer can be
+measured. Older cached pilot image-prediction files used the field name
+`curb_ramp_probability`; the code can still read that legacy name for reproducibility.
+
 The model checks whether a centered candidate curb-ramp crop is a correct label. In this
 project, a selected directional Mapillary image is eligible only when the camera location
 is close to the inventory point and its heading is aligned with that point. The remaining

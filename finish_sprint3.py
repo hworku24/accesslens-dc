@@ -173,7 +173,6 @@ def build_report(
     rows = "\n".join(metric_row(result, name) for name, result in evaluations)
     return f"""# Sprint 3: target-centered pilot evaluation
 
-
 Completed: 2026-09-21
 
 ## Label reconciliation

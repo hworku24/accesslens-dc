@@ -52,7 +52,6 @@ def main() -> None:
     lines = [
         "# Sprint 5 development readiness",
         "",
-        "",
         "## Development batch",
         "",
         f"- Candidates: {len(candidates)}",

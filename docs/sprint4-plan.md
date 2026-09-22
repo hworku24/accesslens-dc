@@ -1,6 +1,5 @@
 # Sprint 4: QA/QC deliverables
 
-
 ## Task 4.1: Disagreement adjudication
 
 - Build the five-case inventory disagreement review.
@@ -21,12 +20,12 @@
 
 **Done when:** one script writes the cost table from resolved labels and cached predictions.
 
-## Task 4.3: Memo and project walkthrough
+## Task 4.3: Memo and stakeholder summary
 
 - Add the adjudication split and cost table.
 - Add build, buy, and data-collection options.
 - Add licensing, limits, and a clear ship decision.
-- Write five short stakeholder bullets and two failure-analysis answers.
+- Write five concise stakeholder talking points and two failure-analysis notes.
 - Check every external citation in a browser.
 
-**Done when:** the memo stays under six pages, the project walkthrough is ready, and all tests pass.
+**Done when:** the memo stays under six pages, the project summary is ready, and all tests pass.

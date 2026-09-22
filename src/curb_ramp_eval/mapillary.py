@@ -15,6 +15,7 @@ from .evaluation import haversine_meters
 
 
 GRAPH_ENDPOINT = "https://graph.mapillary.com/images"
+RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
 
 
 def bbox_around_point(latitude: float, longitude: float, radius_meters: float) -> tuple[float, float, float, float]:
@@ -69,6 +70,8 @@ def query_images(
         with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
             payload = json.load(response)
     except urllib.error.HTTPError as exc:
+        if exc.code in RETRYABLE_HTTP_STATUS:
+            raise
         body = exc.read().decode("utf-8", errors="replace")
         raise RuntimeError(f"Mapillary API returned HTTP {exc.code}: {body[:300]}") from exc
     return payload.get("data", [])

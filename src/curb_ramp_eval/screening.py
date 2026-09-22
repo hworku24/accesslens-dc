@@ -61,12 +61,24 @@ def load_screening_predictions(path: str | Path) -> list[dict]:
         {"record_id", "model_name", "predicted_label", "confidence"},
         "predictions",
     )
-    seen: set[tuple[str, str]] = set()
+    model_names = {row["model_name"].strip() for row in rows}
+    if "" in model_names:
+        raise ValueError("Every prediction row needs a model_name")
+    if len(model_names) != 1:
+        raise ValueError(
+            "A screening evaluation file must contain exactly one model; "
+            f"found {sorted(model_names)}"
+        )
+
+    seen: set[str] = set()
     for row in rows:
-        key = (row["model_name"], row["record_id"])
-        if key in seen:
-            raise ValueError(f"Duplicate prediction for model and record: {key}")
-        seen.add(key)
+        record_id = row["record_id"].strip()
+        if not record_id:
+            raise ValueError("Every prediction row needs a record_id")
+        if record_id in seen:
+            raise ValueError(f"Duplicate prediction record_id: {record_id}")
+        seen.add(record_id)
+        key = (row["model_name"], record_id)
         if row["predicted_label"] not in PREDICTION_LABELS:
             raise ValueError(
                 f"Invalid predicted_label {row['predicted_label']!r} for {key}"
@@ -203,6 +215,13 @@ def evaluate_screening(
 ) -> dict:
     if not 0 <= confidence_threshold <= 1:
         raise ValueError("confidence_threshold must be between 0 and 1")
+    if prediction_rows:
+        model_names = {row["model_name"] for row in prediction_rows}
+        if len(model_names) != 1:
+            raise ValueError(
+                "evaluate_screening expects predictions from exactly one model; "
+                f"found {sorted(model_names)}"
+            )
     truth_by_id = {row["record_id"]: row for row in truth_rows}
     prediction_by_id = {row["record_id"]: row for row in prediction_rows}
 

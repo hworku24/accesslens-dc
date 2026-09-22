@@ -5,15 +5,18 @@ Updated: 2026-09-22
 ## Completed
 
 - Froze evaluation protocol version 1.0 before real model scoring.
+- Documented later coverage-pool, pilot, and scale-up sampling choices without rewriting the frozen protocol.
 - Downloaded, hashed, and audited all 34,859 DDOT inventory records.
-- Defined three study areas and generated 144 reproducible, balanced candidates.
-- Built Mapillary coverage, ranking, provenance, and collection code.
+- Defined three study areas and generated 144 reproducible, balanced coverage candidates.
+- Built Mapillary coverage, ranking, provenance, collection, checkpoint, and transient-error retry code.
 - Built a protected label contract and imagery attachment workflow.
 - Built an OpenCV quality gate with explicitly provisional thresholds.
 - Downloaded and hashed the pinned Project Sidewalk ONNX validator.
 - Verified local CPU inference.
 - Built inventory baseline and model evaluation with abstention, condition slices,
   Wilson intervals, population reweighting, and review queues.
+- Added a single-model evaluation guard so prediction rows from different model arms cannot overwrite one another.
+- Clarified that the Project Sidewalk class-0 score is a validator `correct` score, not a calibrated physical curb-ramp-presence probability.
 - Generated an interactive candidate map.
 - Ran a balanced 12-record Mapillary pilot with 91.7 percent point coverage.
 - Downloaded and audited 22 pilot images across 11 records.
@@ -35,14 +38,13 @@ Updated: 2026-09-22
 - Added a GitHub Actions workflow for the full Python test suite.
 - Completed the blind target-crop label pass and reconciled all 12 records.
 - Adjudicated one direct label conflict with a written reason.
-- Wrote final Sprint 3 metrics, result map, review queues, stakeholder memo, and project
-  summary.
+- Wrote final Sprint 3 metrics, result map, review queues, stakeholder memo, and project summary.
 - Built the Sprint 4 inventory-history adjudication interface for five disagreements.
 - Kept all five historical causes unresolved because only post-2016 evidence is available.
 - Produced a 14-unit QA split with 6 model errors and 8 imagery-insufficient cases.
 - Added field-review cost sensitivity at 1x, 5x, and 10x missed-ramp cost ratios.
 - Completed the cited decision memo and project walkthrough.
-- Passed 48 automated tests.
+- Passed the full GitHub Actions test suite, including regression coverage for screening, validator compatibility, and API retries.
 - Froze a balanced 72-record development split and 24-record held-out split.
 - Excluded all 12 pilot records from both scale-up splits.
 - Queried coverage metadata for both splits while keeping held-out images sealed.
@@ -104,5 +106,5 @@ new training data or a different model.
 - Evidence failures retained in the labeling batch: 17 records.
 - Held-out image downloads: zero.
 
-See `outputs/sprint5_coverage_report.md`, `outputs/sprint5_readiness_report.md`, and
-`outputs/scaleup_development_labeling_app.html`.
+See `outputs/README.md`, `outputs/sprint5_coverage_report.md`,
+`outputs/sprint5_readiness_report.md`, and `outputs/scaleup_development_labeling_app.html`.

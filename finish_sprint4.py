@@ -140,7 +140,6 @@ def render_report(rows: list[dict]) -> str:
     model_cases = sum(row["case_type"] == "target_model_truth_disagreement" for row in rows)
     return f'''# Sprint 4: disagreement adjudication
 
-
 ## Review units
 
 - Inventory-truth disagreements: {inventory_cases}
