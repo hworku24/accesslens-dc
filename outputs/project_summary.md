@@ -20,7 +20,7 @@ conflicting records to a review queue.
 - Target-model answered-case accuracy was 14.3 percent, exposing poor cross-source transfer
 - Five inventory-history disagreements retained as unresolved because no 2016 evidence exists
 - Cost analysis compares wasted field visits with missed absent ramps at three ratios
-- 48 automated tests passing at the Sprint 5 checkpoint
+- 56 automated tests passing in GitHub Actions
 
 ## Scope
 
