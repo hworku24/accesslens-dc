@@ -39,6 +39,8 @@ class ScaleupLabelingAppTests(unittest.TestCase):
             self.assertEqual(page.count('"evidence_status": "usable_target_view"'), 55)
             self.assertEqual(page.count('"evidence_status": "no_eligible_target_view"'), 17)
             self.assertIn("eligible_image_count", page)
+            self.assertIn("automatic_evidence_gate", page)
+            self.assertIn("label_source", page)
 
 
 if __name__ == "__main__":
