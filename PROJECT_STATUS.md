@@ -44,7 +44,8 @@ Updated: 2026-09-22
 - Produced a 14-unit QA split with 6 model errors and 8 imagery-insufficient cases.
 - Added field-review cost sensitivity at 1x, 5x, and 10x missed-ramp cost ratios.
 - Completed the cited decision memo and project walkthrough.
-- Passed the full GitHub Actions test suite, including regression coverage for screening, validator compatibility, and API retries.
+- Passed the full GitHub Actions test suite, including regression coverage for screening,
+  validator compatibility, and API retries.
 - Froze a balanced 72-record development split and 24-record held-out split.
 - Excluded all 12 pilot records from both scale-up splits.
 - Queried coverage metadata for both splits while keeping held-out images sealed.
