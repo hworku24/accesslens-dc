@@ -122,7 +122,7 @@ def main() -> None:
     output_manifest.parent.mkdir(parents=True, exist_ok=True)
     with output_manifest.open("w", newline="", encoding="utf-8") as stream:
         fields = sorted({field for row in crops for field in row})
-        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(crops)
     print(f"Wrote {len(crops)} target-centered crops to {output_manifest}; rejected {rejected}")
@@ -130,4 +130,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

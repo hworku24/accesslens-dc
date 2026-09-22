@@ -29,6 +29,11 @@ def main() -> None:
     parser.add_argument("--output-file", type=Path, default=OUTPUT)
     parser.add_argument("--storage-key", default="accesslens-pilot-labels-v1")
     parser.add_argument("--export-filename", default="accesslens_pilot_labels.csv")
+    parser.add_argument(
+        "--quality-passed-only",
+        action="store_true",
+        help="Include only manifest rows whose quality_gate_pass value is 1",
+    )
     parser.add_argument("--title", default="AccessLens DC")
     parser.add_argument(
         "--subtitle",
@@ -49,6 +54,10 @@ def main() -> None:
     output_path = project_path(args.output_file)
     candidates = read_csv(candidate_path)
     manifest = read_csv(manifest_path)
+    if args.quality_passed_only:
+        if manifest and "quality_gate_pass" not in manifest[0]:
+            parser.error("--quality-passed-only requires a quality_gate_pass column")
+        manifest = [row for row in manifest if row["quality_gate_pass"] == "1"]
     images_by_record: dict[str, list[dict]] = defaultdict(list)
     for row in manifest:
         images_by_record[row["record_id"]].append(
@@ -70,6 +79,11 @@ def main() -> None:
             "longitude": row["longitude"],
             "inventory_condition": row["condition"],
             "year_inspected": row["year_inspected"],
+            "evidence_status": (
+                "usable_target_view"
+                if images_by_record.get(row["record_id"], [])
+                else "no_eligible_target_view"
+            ),
             "images": images_by_record.get(row["record_id"], []),
         }
         for row in candidates
@@ -112,7 +126,7 @@ function updateProgress(){const done=records.filter(r=>isComplete(labels[r.recor
 function escapeHtml(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function imageHtml(i){const method=i.projection_method==='source_image'?'source view':i.projection_method.replaceAll('_',' ');return `<div class="image"><img src="${escapeHtml(i.path)}"><div class="caption">${escapeHtml(i.captured_at.slice(0,10))} · ${Number(i.distance_m).toFixed(1)} m · ${escapeHtml(method)}</div></div>`}
 function selectHtml(field,values,value){return `<select data-field="${field}"><option value="">Select…</option>${values.map(v=>`<option ${v===value?'selected':''}>${v}</option>`).join('')}</select>`}
-function render(){const [r,l]=current(); const images=r.images.length?r.images.map(imageHtml).join(''):'<div class="empty">No imagery returned for this record. Label cannot determine.</div>';
+function render(){const [r,l]=current(); const images=r.images.length?r.images.map(imageHtml).join(''):'<div class="empty">No target view passed the frozen evidence gate. Label cannot determine.</div>';
 document.getElementById('app').innerHTML=`<section class="record"><div class="record-head"><div><h2>${escapeHtml(r.record_id)}</h2><div class="meta">${escapeHtml(r.study_area.replaceAll('_',' '))} · record ${index+1} of ${records.length}</div></div><div class="meta">${r.images.length} image(s)</div></div><div class="images">${images}</div>
 <fieldset class="truth"><legend>Truth label</legend><div class="choices">${truthOptions.map(([v,t])=>`<button class="choice ${l.truth_label===v?'selected':''}" data-truth="${v}">${t}</button>`).join('')}</div></fieldset>
 <div class="form-grid"><label>Overall image quality${selectHtml('image_quality',['good','usable','poor','unusable'],l.image_quality)}</label><label>Occlusion${selectHtml('occlusion',['none','partial','severe','unknown'],l.occlusion)}</label><label>Detectable warning${selectHtml('detectable_warning',['visible','not_visible','cannot_determine'],l.detectable_warning)}</label></div>
@@ -123,7 +137,7 @@ function move(delta){index=Math.max(0,Math.min(records.length-1,index+delta));re
 document.getElementById('previous').onclick=()=>move(-1);document.getElementById('next').onclick=()=>move(1);
 document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.key==='1'||e.key==='2'||e.key==='3'){const [,l]=current();l.truth_label=truthOptions[Number(e.key)-1][0];l.label_timestamp=new Date().toISOString();save();render()}else if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowLeft')move(-1)});
 function csvCell(v){const s=String(v??'');return /[",\\n]/.test(s)?'"'+s.replaceAll('"','""')+'"':s}
-document.getElementById('export').onclick=()=>{const incomplete=records.filter(r=>!isComplete(labels[r.record_id]));if(incomplete.length){alert(`Complete truth, image quality, occlusion, and detectable warning for every record before export. Missing: ${incomplete.map(r=>r.record_id).join(', ')}`);return}const fields=['record_id','study_area','latitude','longitude','inventory_condition','year_inspected','image_ids','image_paths','truth_label','image_quality','occlusion','detectable_warning','labeler','label_timestamp','notes'];const lines=[fields.join(',')];for(const r of records){const l=labels[r.record_id]||{};const row={...r,...l,image_ids:r.images.map(i=>i.image_id).join('|'),image_paths:r.images.map(i=>i.path.startsWith('../')?i.path.slice(3):i.path).join('|')};lines.push(fields.map(f=>csvCell(row[f])).join(','))}const blob=new Blob([lines.join('\\n')+'\\n'],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=pageConfig.exportFilename;a.click();URL.revokeObjectURL(a.href)};
+document.getElementById('export').onclick=()=>{const incomplete=records.filter(r=>!isComplete(labels[r.record_id]));if(incomplete.length){alert(`Complete truth, image quality, occlusion, and detectable warning for every record before export. Missing: ${incomplete.map(r=>r.record_id).join(', ')}`);return}const fields=['record_id','study_area','latitude','longitude','inventory_condition','year_inspected','evidence_status','eligible_image_count','image_ids','image_paths','truth_label','image_quality','occlusion','detectable_warning','labeler','label_timestamp','notes'];const lines=[fields.join(',')];for(const r of records){const l=labels[r.record_id]||{};const row={...r,...l,eligible_image_count:r.images.length,image_ids:r.images.map(i=>i.image_id).join('|'),image_paths:r.images.map(i=>i.path.startsWith('../')?i.path.slice(3):i.path).join('|')};lines.push(fields.map(f=>csvCell(row[f])).join(','))}const blob=new Blob([lines.join('\\n')+'\\n'],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=pageConfig.exportFilename;a.click();URL.revokeObjectURL(a.href)};
 render();
 </script></body></html>"""
     page_config = {

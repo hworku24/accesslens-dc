@@ -1,6 +1,6 @@
 # AccessLens DC project status
 
-Updated: 2026-09-21
+Updated: 2026-09-22
 
 ## Completed
 
@@ -43,6 +43,13 @@ Updated: 2026-09-21
 - Added field-review cost sensitivity at 1x, 5x, and 10x missed-ramp cost ratios.
 - Completed the cited decision memo and project walkthrough.
 - Passed 48 automated tests.
+- Froze a balanced 72-record development split and 24-record held-out split.
+- Excluded all 12 pilot records from both scale-up splits.
+- Queried coverage metadata for both splits while keeping held-out images sealed.
+- Added resumable Mapillary coverage and image collection with checkpoint files.
+- Collected 121 development images across 61 records.
+- Built 95 target crops and retained 88 that passed the frozen crop gate.
+- Prepared a blind development labeling batch with 55 usable records.
 
 ## Sprint 2 result
 
@@ -81,8 +88,21 @@ new training data or a different model.
 
 ## Next scale-up
 
-1. Collect separate development and held-out batches.
-2. Label at least 50 usable records, keeping insufficient imagery as a measured outcome.
+1. Complete blind labels for the 72 development records.
+2. Keep the 17 evidence failures as `cannot_determine` outcomes.
 3. Add a second reviewer and report agreement.
 4. Train or select a model using imagery closer to the Mapillary deployment domain.
-5. Run the frozen policy on held-out records.
+5. Freeze preprocessing and decision settings in a code revision.
+6. Open held-out imagery and run the frozen policy once.
+
+## Sprint 5 checkpoint
+
+- Development Mapillary coverage: 65 of 72 records, or 90.3 percent.
+- Held-out Mapillary coverage metadata: 20 of 24 records, or 83.3 percent.
+- Downloaded development evidence: 121 images across 61 records.
+- Eligible target evidence: 88 crops across 55 records.
+- Evidence failures retained in the labeling batch: 17 records.
+- Held-out image downloads: zero.
+
+See `outputs/sprint5_coverage_report.md`, `outputs/sprint5_readiness_report.md`, and
+`outputs/scaleup_development_labeling_app.html`.

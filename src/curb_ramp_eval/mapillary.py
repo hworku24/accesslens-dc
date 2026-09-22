@@ -41,7 +41,7 @@ def _write_csv(rows: list[dict], path: str | Path) -> None:
         return
     fields = list(rows[0])
     with output.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -188,6 +188,8 @@ def run_coverage_check(
     token: str | None = None,
     max_points: int | None = None,
     delay_seconds: float = 0.1,
+    resume: bool = True,
+    retry_attempts: int = 3,
 ) -> list[dict]:
     token = token or os.environ.get("MAPILLARY_ACCESS_TOKEN")
     if not token:
@@ -199,13 +201,41 @@ def run_coverage_check(
     if max_points is not None:
         candidates = candidates[:max_points]
 
+    completed: dict[str, dict] = {}
+    output = Path(output_path)
+    if resume and output.exists() and output.stat().st_size:
+        completed = {row["record_id"]: row for row in _read_csv(output)}
+
     results: list[dict] = []
     for index, row in enumerate(candidates, start=1):
-        images = query_images(
-            float(row["latitude"]),
-            float(row["longitude"]),
-            token,
-        )
+        if row["record_id"] in completed:
+            results.append(completed[row["record_id"]])
+            print(f"[{index}/{len(candidates)}] {row['record_id']}: resumed")
+            continue
+
+        images = None
+        for attempt in range(1, retry_attempts + 1):
+            try:
+                images = query_images(
+                    float(row["latitude"]),
+                    float(row["longitude"]),
+                    token,
+                )
+                break
+            except (TimeoutError, urllib.error.URLError) as exc:
+                if attempt == retry_attempts:
+                    raise RuntimeError(
+                        f"Mapillary coverage failed for {row['record_id']} after "
+                        f"{retry_attempts} attempts"
+                    ) from exc
+                wait_seconds = 2 ** (attempt - 1)
+                print(
+                    f"[{index}/{len(candidates)}] {row['record_id']}: "
+                    f"attempt {attempt} failed; retrying in {wait_seconds}s"
+                )
+                time.sleep(wait_seconds)
+
+        assert images is not None
         pano_count = sum(bool(image.get("is_pano")) for image in images)
         capture_times = [image.get("captured_at") for image in images if image.get("captured_at")]
         results.append(
@@ -220,6 +250,7 @@ def run_coverage_check(
             }
         )
         print(f"[{index}/{len(candidates)}] {row['record_id']}: {len(images)} images")
+        _write_csv(results, output_path)
         if delay_seconds:
             time.sleep(delay_seconds)
 

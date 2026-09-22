@@ -169,6 +169,30 @@ seven absent ramps. None of the tested policies supports automated clearance.
 See `outputs/sprint4_adjudication_report.md`, `outputs/sprint4_screening_costs.md`,
 `outputs/stakeholder_memo.md`, and `outputs/sprint4_project_walkthrough.md`.
 
+Sprint 5 development preparation is complete. The scale-up split contains 72 development
+records and 24 held-out records, with six development and two held-out records in every
+area-by-condition stratum. All 12 pilot records are excluded. Coverage metadata exists for
+both splits, while held-out thumbnails remain unopened.
+
+The development batch contains 55 records with at least one target crop that passed the
+frozen crop gate. The other 17 records remain in scope as evidence failures. Complete the
+blind review at `outputs/scaleup_development_labeling_app.html` through the local server.
+
+Rebuild the development labeling artifact with:
+
+```bash
+.venv/bin/python make_pilot_labeling_app.py \
+  --candidate-file data/processed/mapillary_scaleup_development_candidates.csv \
+  --manifest-file data/processed/mapillary_scaleup_development_target_crop_quality.csv \
+  --output-file outputs/scaleup_development_labeling_app.html \
+  --storage-key accesslens-scaleup-development-labels-v1 \
+  --export-filename accesslens_scaleup_development_labels.csv \
+  --quality-passed-only
+```
+
+See `outputs/sprint5_coverage_report.md` and `outputs/sprint5_readiness_report.md` for
+coverage, evidence failures, and the held-out separation rule.
+
 After exporting all 12 target-crop labels, finish reconciliation and scoring with:
 
 ```bash

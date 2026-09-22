@@ -16,6 +16,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Check Mapillary coverage around sampled DDOT curb ramps")
     parser.add_argument("--max-points", type=int, default=None)
     parser.add_argument(
+        "--no-resume",
+        action="store_true",
+        help="Discard an existing partial output and query every candidate again",
+    )
+    parser.add_argument(
         "--candidate-file",
         type=Path,
         default=ROOT / "data/processed/mapillary_coverage_candidates.csv",
@@ -31,6 +36,7 @@ def main() -> None:
         args.candidate_file,
         args.output_file,
         max_points=args.max_points,
+        resume=not args.no_resume,
     )
     totals = collections.defaultdict(lambda: {"points": 0, "covered": 0, "images": 0})
     for row in results:

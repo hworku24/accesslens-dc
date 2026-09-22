@@ -54,7 +54,7 @@ def main() -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", newline="", encoding="utf-8") as stream:
         fields = sorted({field for row in rows for field in row})
-        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     passed = sum(row["quality_gate_pass"] for row in rows)
