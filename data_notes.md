@@ -1,8 +1,8 @@
 # DDOT ADA curb-ramp inventory audit
 
-Audit timestamp: `2026-09-01T18:32:15.365592+00:00`  
-Source file: `data/raw/ddot_ada_curb_ramps.geojson`  
-Source URL: <https://opendata.arcgis.com/api/v3/datasets/f94e9628f2604e6e9a25fd8c496b4c6c_3/downloads/data?format=geojson&spatialRefId=4326>  
+Audit timestamp: `2026-09-01T18:32:15.365592+00:00`
+Source file: `data/raw/ddot_ada_curb_ramps.geojson`
+Source URL: <https://opendata.arcgis.com/api/v3/datasets/f94e9628f2604e6e9a25fd8c496b4c6c_3/downloads/data?format=geojson&spatialRefId=4326>
 SHA256: `f107d0b87656c73559235b23a21951c6811de5744ffe9b0428bca36bb998819b`
 
 ## Headline findings
